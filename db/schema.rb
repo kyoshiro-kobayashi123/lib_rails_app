@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_22_020716) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_22_033311) do
   create_table "books", force: :cascade do |t|
     t.string "title"
     t.string "author"
@@ -20,4 +20,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_22_020716) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "loans", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "book_id", null: false
+    t.date "loaned_on"
+    t.date "returned_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_loans_on_book_id"
+    t.index ["user_id"], name: "index_loans_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "student_no"
+    t.string "name"
+    t.string "role"
+    t.string "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "loans", "books"
+  add_foreign_key "loans", "users"
 end

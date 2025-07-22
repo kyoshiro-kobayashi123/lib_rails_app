@@ -1,15 +1,29 @@
 Rails.application.routes.draw do
-  resources :books
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # ユーザー関連のルート（ユーザー新規作成）
+  resources :users, only: [ :new, :create ]
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # ログインセッション関連
+  resource :session, only: [ :new, :create, :destroy ]
+
+  # 本のリソース
+  resources :books
+  # 貸し借り
+  resources :loans
+  # ユーザーごとに貸出機能（loan）を設定
+  resources :users do
+    resources :loans, only: [ :create ] do
+      # 返却処理のためのルート
+      patch :return_book, on: :member
+    end
+  end
+
+  # 健康チェック
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
+  # 動的PWAファイルの読み込み（必要に応じて）
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # ルートパスの設定（書籍一覧を表示）
+  root "books#index"
 end

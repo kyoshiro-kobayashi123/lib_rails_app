@@ -1,16 +1,5 @@
-<!-- 書籍-->
-<p style="color: green"><%= notice %></p>
+<h1>Welcome, <%= @user.name %></h1>
 
-<%= render @book %>
-
-<div>
-  <%= link_to "Edit this book", edit_book_path(@book) %> |
-  <%= link_to "Back to books", books_path %>
-
-  <%= button_to "Destroy this book", @book, method: :delete %>
-</div>
-
-<!-- 借りる-->
 <h2>Books available to borrow:</h2>
 <%= form_with url: user_loans_path(@user), method: :post do |form| %>
   <div class="field">
@@ -20,7 +9,6 @@
   <%= form.submit 'Borrow' %>
 <% end %>
 
-<!--苅田-->
 <h2>Your borrowed books:</h2>
 <ul>
   <% @user.loans.each do |loan| %>
@@ -34,3 +22,4 @@
     </li>
   <% end %>
 </ul>
+

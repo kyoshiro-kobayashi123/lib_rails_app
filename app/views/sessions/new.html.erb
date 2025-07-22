@@ -1,0 +1,19 @@
+<h1>Login</h1>
+
+<%= form_with url: session_path, method: :post do |form| %>
+  <div class="field">
+    <%= form.label :student_no %>
+    <%= form.text_field :student_no %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Login" %>
+  </div>
+<% end %>
+
+<%= link_to 'Sign up', new_user_path %>
